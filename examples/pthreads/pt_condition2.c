@@ -70,7 +70,9 @@ void* evenCounter(void* arg)
             {
                 ++count;
                 printf("Thread %d: %d\n", ID, count);
+                pthread_mutex_lock(&cond_mutex);			// lock condition mutex
                 countIsOdd = 1;                             // even number increased by one is odd
+                pthread_mutex_unlock(&cond_mutex);			// unlock condition mutex
                 pthread_cond_signal(&odd_cond);             // wake up oddCounter to continue, this thread will fall into sleep when it tries to lock count mutex
             }
         }
